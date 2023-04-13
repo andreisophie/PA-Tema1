@@ -1,4 +1,4 @@
-# Tema 1 PA
+# Tema 1 PA 2023
 
 Made by Andrei Mărunțiș
 
@@ -21,6 +21,50 @@ Pasii rezolvarii sunt urmatorii:
     - Altfel, injumatatesc intervalul de cautare setand `stg = middle + 1` (caut doar solutii cu costul mai mare decat cel pe care l-am verificat la pasul curent)
     - Continui pasii de mai sus pana cand `stg > dr`
 - Ultimul raspuns valid este raspunsul corect al problemei
+
+## Problema 4 - Semnale
+
+### Task 1
+
+Pentru a rezolva problema de combinatorica folosesc urmatorul rationament:
+
+- Am `x` biti de 0 si `y` biti de 1.
+- Gandesc posibilele siruri astfel:
+    - Pentru a ma asigura ca nu am doi biti de 1 alaturati, gandesc ca am sirul de `x` biti de 0 intre care pot sa asez (sau nu) cate un bit de 1
+    - Spre exemplu, pentru 4 biti de 0 si 2 biti de 1, am sirul `_ 0 _ 0 _ 0 _ 0 _`, pe oricare dintre spatii poate sta sau nu un bit de 1
+    - Problema se reduce la a numara in cate moduri pot aseza cei `y` biti de 1 pe cele `x + 1` pozitii libere; solutia este combinari de `x + 1` luate cate `y`
+- Pentru a calcula combinarile folosesc formula cunoscuta `π(n-k+1...n)/π(1...k)` (`π(i...j)` inseamna produs de la i la j)
+
+Dificultatea problemei consta in calculul impartirilor modulo `10^9+7`. Pentru a face asta se foloseste metoda descrisa [aici](https://www.geeksforgeeks.org/multiplicative-inverse-under-modulo-m/): 
+
+Daca vreau sa calculez `(x / y) % mod` nu este corect sa efectuaz impartirea, trebuie sa calculez `(x * inv(y)) % mod`, `inv(y)` fiind inversul modular multiplicativ al lui `y` fata de `mod`.
+
+Pentru a calcula acest invers se foloseste in mod normal algoritmul lui euclid extins descris [aici](https://www.geeksforgeeks.org/euclidean-algorithms-basic-and-extended/), insa exista o proprietate (prezentata [aici](https://www.geeksforgeeks.org/modular-division/)) care spune ca inversul modular multiplicativ al unui numar `y` modulo `mod` cu prorpietatea ca `y` si `mod` sunt prime intre ele este egal cu `y^(mod - 2) % mod`.
+
+Astfel, pentru a calcula inversul folosesc proprietatea de mai sus, iar pentru eficienta implementez exponentierea in timp logaritmic (cu injumatatirea exponentului la fiecare pas):
+
+- `A^2k = (A^2)^k`
+- `A^(2k + 1) = (A^2)^k * A`
+
+### Task 2
+
+Acest task prezinta in plus fata de task-ul precedent o problema de combinatorica mai complexa, insa calculul in sine al combinarilor nu se modifica deloc.
+
+Pentru a rezolva problema de combinatorica, folosesc urmatorul algoritm:
+
+- Asemanator task-ului 1, consider sirul de `x` biti de 0 intre care pot sa pun 0, 1 sau 2 biti de 1
+- Spre exemplu, pentru 4 biti de 0 am sirul `_ 0 _ 0 _ 0 _ 0 _`
+- Initial, consider ca pun cel mult 1 bit de 1 in fiecare spatiu (am `y` grupuri de cate 1 bit de 1); solutia la aceasta problema este aceeasi cu task-ul 1
+- La urmatorul pas:
+    - consider ca am 1 grup de 2 biti de 1 alaturati si `y - 1` grupuri de cate 1 bit de 1, pe care incerc sa ii asez in cele `x + 1` pozitii
+    - pot face acest lucru in combinari de `x + 1` luate cate `y - 1` moduri
+    - de aceasta data, conteaza insa si ordinea in care asez aceste grupuri (intrucat ele nu mai sunt identice); astfel, trebuie sa inmultesc rezultatul de mai sus cu inca o valoare combinatoriala, anume combinari de `y - 1` luate cate 1
+- In cazul general, considerand ca am `nr_groups` grupuri de 1 si 11 (in total) si `nr_double = y - nr_groups` grupuri de 11, efectuez urmatorul calcul:
+    - pot sa aleg pozitiile pe care pun grupuri in combinari de `x + 1` luate cate `nr_groups` moduri
+    - numarul de moduri in care pot alege ordinea in care pun grupurile pe cele `nr_groups` pozitii alese va fi combinari de `nr_groups` luate cate `nr_double`
+    - astfel, numarul de siruri cu `nr_double` grupuri de 11 va fi produsul combinarilor de la punctele de mai sus
+- Repet pasul de mai sus pentru toate valorile posibile pentru `nr_double = 0...nr_groups/2` si adun valorile obtinute astfel
+
 
 ## Problema 5 - BadGPT
 

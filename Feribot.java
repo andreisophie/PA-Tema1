@@ -24,8 +24,6 @@ public class Feribot {
 			nrFerries++;
 		}
 
-		System.out.println("Ca sa incarc maxim " + maxCost + " am nevoie de " + nrFerries + " feriboturi");
-
 		return nrFerries <= k;
 	}
 

@@ -42,6 +42,8 @@ public class Nostory {
 	}
 
 	private static long solveTask1(int[] a, int[] b) {
+		
+
 		return 0L;
 	}
 

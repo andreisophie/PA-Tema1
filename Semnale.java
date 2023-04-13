@@ -11,14 +11,43 @@ class Semnale {
 
 	Semnale(){}
 
+	static int pow_modulo(int base, int exp) {
+		if (exp == 1) {
+			return base;
+		}
+		if (exp % 2 == 0) {
+			return pow_modulo((int)((1L * base * base) % mod), exp / 2);
+		}
+		return (int)((1L * base * pow_modulo((int)((1L * base * base) % mod), exp / 2)) % mod);
+	}
+
+	static int modulo_inverse(int n) {
+		return pow_modulo(n, mod - 2);
+	}
+
+	static int combinari(int n, int k) {
+		int result = 1;
+		for (int i = n - k + 1;  i <= n; i++) {
+			result = (int)((1L * result * i) % mod);
+		}
+		for (int i = 1; i <= k; i++) {
+			result = (int)((1L * result * modulo_inverse(i)) % mod);
+		}
+		return result;
+	}
+
 	static int type1() {
-		//TODO Compute the number of type 1 signals.
-		return 0;
+		return combinari(x + 1, y);
 	}
 
 	static int type2() {
-		//TODO Compute the number of type 2 signals.
-		return 0;
+		int result = 0;
+		for (int nr_groups = y, nr_double = 0; nr_double <= nr_groups; nr_groups--, nr_double++) {
+			result = (int)((result + (1L * combinari(x + 1, nr_groups)
+				* combinari(nr_groups, nr_double)) % mod) % mod);
+		}
+		System.out.println(result);
+		return result;
 	}
 
 	public static void main(String[] args) {
