@@ -2,9 +2,29 @@
 
 Made by Andrei Mărunțiș
 
+> **Nota**: Acest readme este scris in markdown, deschide-l cu un editor specializat pentru o citire mai usoara.
+
+## Problema 1 - Feribot
+
+Solutia la aceasta problema este inspirata de [aici](https://www.geeksforgeeks.org/allocate-minimum-number-pages/).
+
+Pasii rezolvarii sunt urmatorii:
+
+- Dupa ce am citit datele, consider cazurile in care as avea costul minim, respectiv maxim:
+    - costul minim il obtin daca am un numar de feriboturi egal cu numarul de masini, astfel costul va fi greutatea maxima dintre masini
+    - costul maxim se obtine daca inghesui toate masinile pe un singur feribot, iar in acest caz costul va fi suma greutatilor tuturor masinilor
+- raspunsul cautat (costul minim avand k feriboturi) se afla undeva intre valorile definite mai sus. Pentru a determina eficient costul corect, fac un fel de cautare binara (imi injumatatesc la fiecare pas domeniul de cautare, astfel):
+    - Initial `stg=costMinim` si `dr=costMaxim`
+    - Calculez mijlocul ca fiind media aritmetica `middle = (stg + dr) / 2`
+    - Verific daca este posibil sa transport masinile cu un cost maxim egal cu `middle` (greutatea masinilor de pe fiecare feribot sa fie cel mult egala cu `middle`); fac asta parcurgand liniar vectorul de masini si facand sume partiale
+    - Daca gasesc ca este posibil, atunci injumatatesc intervalul de cautare setand `dr = middle - 1` (caut doar solutii cu costul mai mic decat cel pe care l-am gasit deja ca fiind valid)
+    - Altfel, injumatatesc intervalul de cautare setand `stg = middle + 1` (caut doar solutii cu costul mai mare decat cel pe care l-am verificat la pasul curent)
+    - Continui pasii de mai sus pana cand `stg > dr`
+- Ultimul raspuns valid este raspunsul corect al problemei
+
 ## Problema 5 - BadGPT
 
-Se observa usor urmatoarea recurenta:
+Se observa usor urmatoarea recurenta (absolut identica pentru u si n):
 
 - Fie `u[i]` = numarul de siruri de u/w care se termina in u
 - Fie `w[i]` = numarul de siruri de u/w care se termina in w

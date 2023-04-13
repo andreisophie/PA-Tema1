@@ -6,17 +6,69 @@ import java.io.Reader;
 import java.util.StringTokenizer;
 
 public class Feribot {
-	int[] v, k;
+	long[] v;
+	int n, k;
 
-	private void solve() {
+	private boolean isPossible(long maxCost) {
+		int nrFerries = 0;
+		long currentSum = 0;
+		for (int i = 0; i < n; i++) {
+			if (currentSum + v[i] > maxCost) {
+				nrFerries++;
+				currentSum = v[i];
+			} else {
+				currentSum += v[i];
+			}
+		}
+		if (currentSum > 0) {
+			nrFerries++;
+		}
 
+		System.out.println("Ca sa incarc maxim " + maxCost + " am nevoie de " + nrFerries + " feriboturi");
+
+		return nrFerries <= k;
 	}
 
-	private void readInput() {
+	private void solve() throws IOException {
+		long maxCar = 0, totalWeight = 0;
+
+		for (int i = 0; i < n; i++) {
+			totalWeight += v[i];
+			if (v[i] > maxCar) {
+				maxCar = v[i];
+			}
+		}
+
+		long result = 0;
+		long stg = maxCar, dr = totalWeight;
+		long middle;
+		while (stg <= dr) {
+			middle = (stg + dr) / 2;
+			if (isPossible(middle)) {
+				result = middle;
+				dr = middle - 1;				
+			} else {
+				stg = middle + 1;
+			}
+		}
+
+		System.out.println(result);
+		PrintStream printer = new PrintStream("feribot.out");
+		printer.println(result);
+		printer.close();
+	}
+
+	private void readInput() throws IOException {
 		MyScanner scanner = new MyScanner(new FileReader("feribot.in"));
+		n = scanner.nextInt();
+		k = scanner.nextInt();
+		v = new long[n];
+		for (int i = 0; i < n; i++) {
+			v[i] = scanner.nextLong();
+		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Feribot task = new Feribot();
 		task.readInput();
 		task.solve();
