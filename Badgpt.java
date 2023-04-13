@@ -15,23 +15,28 @@ public class Badgpt {
 		static int[][] base = {{1, 1}, {1, 0}};
 		HashMap<Integer, Integer> calculatedValues = new HashMap<>();
 
-		public int[][] matrixMultiplication(int matrix1[][], int matrix2[][]) {
+		public int[][] matrixMultiplication(int[][] matrix1, int[][] matrix2) {
 			int[][] result = new int[2][2];
-			result[0][0] = ((matrix1[0][0] * matrix2[0][0]) % MOD + (matrix1[0][1] * matrix2[1][0]) % MOD) % MOD;
-			result[0][1] = ((matrix1[0][0] * matrix2[0][1]) % MOD + (matrix1[0][1] * matrix2[1][1]) % MOD) % MOD;
-			result[1][0] = ((matrix1[1][0] * matrix2[0][0]) % MOD + (matrix1[1][1] * matrix2[1][0]) % MOD) % MOD;
-			result[1][1] = ((matrix1[1][0] * matrix2[0][1]) % MOD + (matrix1[1][1] * matrix2[1][1]) % MOD) % MOD;
+			result[0][0] = (int)(((1L * matrix1[0][0] * matrix2[0][0]) % MOD
+				+ (1L * matrix1[0][1] * matrix2[1][0]) % MOD) % MOD);
+			result[0][1] = (int)(((1L * matrix1[0][0] * matrix2[0][1]) % MOD
+				+ (1L * matrix1[0][1] * matrix2[1][1]) % MOD) % MOD);
+			result[1][0] = (int)(((1L * matrix1[1][0] * matrix2[0][0]) % MOD
+				+ (1L * matrix1[1][1] * matrix2[1][0]) % MOD) % MOD);
+			result[1][1] = (int)(((1L * matrix1[1][0] * matrix2[0][1]) % MOD
+				+ (1L * matrix1[1][1] * matrix2[1][1]) % MOD) % MOD);
 			return result;
 		}
 
-		public int[][] matrixExponentiation(int matrix[][], int exponent) {
+		public int[][] matrixExponentiation(int[][] matrix, int exponent) {
 			if (exponent == 1) {
 				return matrix;
 			}
 			if (exponent % 2 == 0) {
 				return matrixExponentiation(matrixMultiplication(matrix, matrix), exponent / 2);
 			}
-			return matrixMultiplication(matrixExponentiation(matrixMultiplication(matrix, matrix), exponent/2), matrix);
+			return matrixMultiplication(matrixExponentiation(
+				matrixMultiplication(matrix, matrix), exponent / 2), matrix);
 		}
 
 		public int get(int index) {
@@ -49,16 +54,20 @@ public class Badgpt {
 	private void solve() throws IOException {
 		Fibonacci fibonacci = new Fibonacci();
 		long total = 1;
+		for (int i = 1; i <= 51; i++) {
+			System.out.println(fibonacci.get(i));
+		}
 		String[] letters = input.split("[0-9]+");
 		String[] numbersStrings = input.split("[a-z]");
 		long[] numbers = new long[numbersStrings.length - 1];
 		for (int i = 1; i < numbersStrings.length; i++) {
-			numbers[i - 1] = (Long.parseLong(numbersStrings[i]));
+			numbers[i - 1] = (Long.parseLong(numbersStrings[i])) % pisano;
 		}
 		for (int i = 0; i < letters.length; i++) {
-			System.out.println(letters[i] + numbers[i]);
 			if (letters[i].equals("u") || letters[i].equals("n")) {
-				total = (total * (fibonacci.get((int)numbers[i]) + fibonacci.get((int)numbers[i] - 1)) % MOD) % MOD;
+				System.out.println(letters[i] + numbers[i]);
+				total = (total * (fibonacci.get((int)numbers[i])
+					+ fibonacci.get((int)numbers[i] - 1)) % MOD) % MOD;
 			}
 		}
 

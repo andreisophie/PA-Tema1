@@ -1,0 +1,28 @@
+# Tema 1 PA
+
+Made by Andrei Mărunțiș
+
+## Problema 5 - BadGPT
+
+Se observa usor urmatoarea recurenta:
+
+- Fie `u[i]` = numarul de siruri de u/w care se termina in u
+- Fie `w[i]` = numarul de siruri de u/w care se termina in w
+- Vreau sa calculez `u[i + 1]`, `w[i + 1]`:
+    - Pot sa obtin un sir care se termina in u adaugand u la un sir care se termina in u sau w, asadar `u[i + 1] = u[i] + w[i]`
+    - Pot sa obtin un sir care se termina in w doar adaugand u la un sir care se termina deja in u si transformand cei doi de u de la final in w, asadar: `w[i + 1] = u[i]`
+- Observ astfel ca de fapt nu am nevoie de 2 vectori separati, intrucat `w[i] = u[i - 1]`, oricare ar fi i. Astfel, obtin noua recurenta:
+    - `u[i + 1] = u[i] + u[i - 1]`
+- Recurenta de mai sus este definitia sirului lui Fibonacci cu primele elemente `u[0] = 0`, `u[1] = 1`. (Sirul lui Fibonacci clasic)
+- Numarul total de posibilitati in care un sir de lungime i poate fi intepretat va fi `total[i] = u[i] + w[i] = u[i] + u[i - 1]`.
+
+Astfel, cerinta problemei necesita calculul sirului lui Fibonacci. Trebuie implementata a solutie eficienta atat din punct de vedere spatial, cat si temporal, pentru a respecta restrictia de timp (3s), respectiv limita de memorie a masinii.
+
+Optimizarile pe care le-am facut sunt urmatoarele:
+
+- Calculez elementele sirului lui Fibonacci folosind exponentierea matricilor in timp logaritmic (vezi explicatie la acest [link](https://www.nayuki.io/page/fast-fibonacci-algorithms), sectiunea **Matrix exponentiation**)
+- La metoda de mai sus adaug calculul exponentierii in timp logaritmic folosind urmatoarele formule simple:
+    - `A^2k = (A^2)^k`
+    - `A^(2k + 1) = (A^2)^k * A`
+- Sirul lui Fibonacci are proprietatea ca resturile sale modulo orice numar sunt periodice. Lungimile perioadelor modulo 1, 2, 3 etc. formeaza un sir numit sirul lui Pisano. Astfel, folosind codul scris in fisierul `Pisano.java` ([sursa](https://www.geeksforgeeks.org/fibonacci-number-modulo-m-and-pisano-period/)) am determinat (printr-ul calcul separat, "hardcodat") perioada Pisano a sirului lui Fibonacci modulo `10^9+7` si am obtinut perioada `2*10^9+16`. Astfel, a trebuit sa calculez valorile sirului lui Fibonacci pentru al maxim `2*10^9+16`-lea element.
+- Am implementat si un mecanism de memoizare in solutia mea; pentru a calcula valorile lui `Fibo[i]` (al i-lea element din sirul lui Fibonacci) prin metoda exponentierei de matrici primesc si valorile `Fibo[i - 1]` si `Fibo[i + 1]` de care e posibil sa am nevoie mai tarziu. Retin aceste valori intr-un HashMap.
