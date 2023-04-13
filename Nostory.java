@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Nostory {
@@ -42,9 +43,21 @@ public class Nostory {
 	}
 
 	private static long solveTask1(int[] a, int[] b) {
-		
+		int n = a.length;
+		Arrays.sort(a);
+		Arrays.sort(b);
 
-		return 0L;
+		long score = 0;
+		int index_a = n - 1, index_b = n - 1;
+		for (int i = 0; i < a.length; i++) {
+			if (a[index_a] > b[index_b]) {
+				score += a[index_a--];
+			} else {
+				score += b[index_b--];
+			}
+		}
+		System.out.println(score);
+		return score;
 	}
 
 	private static long solveTask2(int[] a, int[] b, int moves) {

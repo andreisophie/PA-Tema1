@@ -22,6 +22,18 @@ Pasii rezolvarii sunt urmatorii:
     - Continui pasii de mai sus pana cand `stg > dr`
 - Ultimul raspuns valid este raspunsul corect al problemei
 
+##  Problema 2 - Nostory
+
+### Task 1
+
+Task-ul 1 este extrem de simplu. O abordare greedy este suficienta pentru a rezolva problema, caci fara nicio restrictie asupra numarului de mutari pot face mutarile asa incat scorul sa fie suma numerelor maxime din vector.
+
+Pentru a face asta, sortez cei doi vectori (eu am facut asta separat), iar apoi am facut un soi de interclasare pentru a selecta numerele maxime din cei doi vectori.
+
+### Task 2
+
+## Problema 3 - Sushi
+
 ## Problema 4 - Semnale
 
 ### Task 1
