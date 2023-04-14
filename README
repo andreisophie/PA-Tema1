@@ -51,7 +51,7 @@ Dificultatea problemei consta in calculul impartirilor modulo `10^9+7`. Pentru a
 
 Daca vreau sa calculez `(x / y) % mod` nu este corect sa efectuaz impartirea, trebuie sa calculez `(x * inv(y)) % mod`, `inv(y)` fiind inversul modular multiplicativ al lui `y` fata de `mod`.
 
-Pentru a calcula acest invers se foloseste in mod normal algoritmul lui euclid extins descris [aici](https://www.geeksforgeeks.org/euclidean-algorithms-basic-and-extended/), insa exista o proprietate (prezentata [aici](https://www.geeksforgeeks.org/modular-division/)) care spune ca inversul modular multiplicativ al unui numar `y` modulo `mod` cu prorpietatea ca `y` si `mod` sunt prime intre ele este egal cu `y^(mod - 2) % mod`.
+Pentru a calcula acest invers se foloseste in mod normal algoritmul lui euclid extins descris [aici](https://www.geeksforgeeks.org/euclidean-algorithms-basic-and-extended/), insa exista o proprietate (prezentata [aici](https://www.geeksforgeeks.org/modular-division/)) care spune ca inversul modular multiplicativ al unui numar `y` modulo `mod` cu proprietatea ca `y` si `mod` sunt prime intre ele este egal cu `y^(mod - 2) % mod`.
 
 Astfel, pentru a calcula inversul folosesc proprietatea de mai sus, iar pentru eficienta implementez exponentierea in timp logaritmic (cu injumatatirea exponentului la fiecare pas):
 
