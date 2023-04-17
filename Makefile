@@ -4,15 +4,15 @@
 
 build: Feribot.class Nostory.class Sushi.class Semnale.class Badgpt.class
 
-run-p1: Feribot.class
+run-p1:
 	java Feribot
-run-p2: Nostory.class
+run-p2:
 	java Nostory
-run-p3: Sushi.class
+run-p3:
 	java Sushi
-run-p4: Semnale.class
+run-p4:
 	java Semnale
-run-p5: Badgpt.class
+run-p5:
 	java Badgpt
 
 # Nu uitați să modificați numele surselor.
