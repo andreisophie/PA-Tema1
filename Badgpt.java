@@ -12,7 +12,7 @@ public class Badgpt {
 	String input;
 
 	public class Fibonacci {
-		static int[][] base = {{1, 1}, {1, 0}};
+		final int[][] base = {{1, 1}, {1, 0}};
 		HashMap<Integer, Integer> calculatedValues = new HashMap<>();
 
 		public int[][] matrixMultiplication(int[][] matrix1, int[][] matrix2) {
