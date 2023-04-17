@@ -46,7 +46,6 @@ class Semnale {
 			result = (int)((result + (1L * combinari(x + 1, nr_groups)
 				* combinari(nr_groups, nr_double)) % mod) % mod);
 		}
-		System.out.println(result);
 		return result;
 	}
 

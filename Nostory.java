@@ -48,20 +48,47 @@ public class Nostory {
 		Arrays.sort(b);
 
 		long score = 0;
-		int index_a = n - 1, index_b = n - 1;
-		for (int i = 0; i < a.length; i++) {
-			if (a[index_a] > b[index_b]) {
-				score += a[index_a--];
+		int idx_a = n - 1, idx_b = n - 1;
+		for (int i = 0; i < n; i++) {
+			if (a[idx_a] > b[idx_b]) {
+				score += a[idx_a--];
 			} else {
-				score += b[index_b--];
+				score += b[idx_b--];
 			}
 		}
-		System.out.println(score);
 		return score;
 	}
 
 	private static long solveTask2(int[] a, int[] b, int moves) {
-		return 0L;
+		int n = a.length;
+		int[] mins = new int[n];
+		int[] maxs = new int[n];
+
+		long score = 0;
+		for (int i = 0; i < n; i++) {
+			if (a[i] < b[i]) {
+				mins[i] = a[i];
+				maxs[i] = b[i];
+				score += b[i];
+			} else {
+				mins[i] = b[i];
+				maxs[i] = a[i];
+				score += a[i];
+			}
+		}
+
+		Arrays.sort(mins);
+		Arrays.sort(maxs);
+		for (int i = 0; i < moves; i++) {
+			if (mins[n - 1 - i] < maxs[i]) {
+				break;
+			}
+			score += mins[n - 1 - i] - maxs[i];
+		}
+
+
+		System.out.println(score);
+		return score;
 	}
 
 	/**
@@ -77,7 +104,7 @@ public class Nostory {
 		}
 
 		public String next() {
-			while (st == null || !st.hasMoreElements()) {
+			while (st == null || !st.hasMoreElements()) { 
 				try {
 					st = new StringTokenizer(br.readLine());
 				} catch (IOException e) {

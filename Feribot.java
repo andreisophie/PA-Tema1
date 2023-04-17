@@ -50,7 +50,6 @@ public class Feribot {
 			}
 		}
 
-		System.out.println(result);
 		PrintStream printer = new PrintStream("feribot.out");
 		printer.println(result);
 		printer.close();

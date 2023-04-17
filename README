@@ -22,6 +22,8 @@ Pasii rezolvarii sunt urmatorii:
     - Continui pasii de mai sus pana cand `stg > dr`
 - Ultimul raspuns valid este raspunsul corect al problemei
 
+> Complexitatea solutiei: `O(n)`
+
 ##  Problema 2 - Nostory
 
 ### Task 1
@@ -30,9 +32,58 @@ Task-ul 1 este extrem de simplu. O abordare greedy este suficienta pentru a rezo
 
 Pentru a face asta, sortez cei doi vectori (eu am facut asta separat), iar apoi am facut un soi de interclasare pentru a selecta numerele maxime din cei doi vectori.
 
+> Complexitatea solutiei: `O(n * log n)`
+
 ### Task 2
 
+La acest task se poate gasi usor o solutie, insa trebuie o solutie extrem de eficienta intrucat limita de timp este foarte mica.
+
+Solutia pe care am implementat-o se bazeaza pe urmatoarea observatie: la fiecare pas, pentru a maximiza punctele, trebuie sa interschimb cel mai mare minim cu cel mai mic maxim (daca exista un minim mai mare decat un maxim).
+
+Astfel, algoritmul de rezolvare este urmatorul:
+
+- Imi construiesc doi vectori cu minimele, respectiv cu maximele din cele doua siruri
+- Pentru eficienta calculez la acest pas si scorul (suma maximelor)
+- Sortez cei doi vectori (eu i-am sortat pe ambii crecator)
+- Avand vectorii sortati, acum am acces in timp liniar la cele doua valori (cel mai mare minim si cel mai mic maxim), ele fiind pe ultimele k pozitii din vectorul de minim, respectiv primele k pozitii din vectorul de maxim
+- Parcurg primele k valori descrise mai sus, si la fiecare pas imi actualizez scorul ca si cum as fi interschimbat cel mai mare minim cu cel mai mic maxim (adun diferenta celor doua)
+- Daca nu mai am minime mai mari decat maximele in vectorul meu, ma opresc
+
+La finalul acestei parcurgeri, scorul va avea valoarea maxima.
+
+> Complexitatea solutiei: `O(n * log n)`
+
 ## Problema 3 - Sushi
+
+### Task 1
+
+Problema aceasta devine exact problema rucsacului discreta, daca consider urmatoarele analogii:
+
+- obiectele de luat = platourile, deci numarul de obiecte = nr de platouri
+- greutatea maxima suportata de rucsac = bugetul total al prietenilor (`n * x`)
+- valoarea obiectelor = suma notelor oferite de prieteni fiecarui platou de sushi
+
+Avand in vedere observatiile de mai sus, aplic algoritmul prezentat in laboratorul 3 (de pe pagina de ocw).
+
+> Complexitatea solutiei: `O(n * m * x)`
+
+### Task 2
+
+Acest task este foarte asemanator cu cel precedent. Unica modificare pe care o fac este ca dublez toate platourile de sushi (fiecare platou va aparea de 2 ori in vectorul de preturi, respectiv in vectorul de note).
+
+> Complexitatea solutiei: `O(n * m * x)`
+
+### Task 3
+
+Task-ul acesta reprezinta problema rucsacului extinsa, solutia este inspirata de [aici](https://www.geeksforgeeks.org/extended-knapsack-problem/).
+
+Diferentele fata de task-ul precedent sunt urmatoarele:
+
+- la matricea mea de prgramare dinamica voi adauga o a 3a dimensiune - numarul de platouri pe care le-am comandat pentru solutia mea - caci acum trebuie sa tin cont de 3 restrictii diferite (bugetul, sa maximizez notele si limita de n platouri)
+- la fiecare pas al recurentei incerc sa gasesc cate o solutie pentru 1, 2, ... n platouri cumparate
+- la final, solutia problemei se va gasi in `dp[2 * m][totalMoney][n]` -> punctajul maxim pe care il pot obtine cu `n * x` bani, cumparand maxim n platouri, avand la dispozitie cele `2*m` platouri
+
+> Complexitatea solutiei: `O(n^2 * m * x)`
 
 ## Problema 4 - Semnale
 
@@ -58,6 +109,8 @@ Astfel, pentru a calcula inversul folosesc proprietatea de mai sus, iar pentru e
 - `A^2k = (A^2)^k`
 - `A^(2k + 1) = (A^2)^k * A`
 
+> Complexitatea solutiei: `O(y)`
+
 ### Task 2
 
 Acest task prezinta in plus fata de task-ul precedent o problema de combinatorica mai complexa, insa calculul in sine al combinarilor nu se modifica deloc.
@@ -77,6 +130,7 @@ Pentru a rezolva problema de combinatorica, folosesc urmatorul algoritm:
     - astfel, numarul de siruri cu `nr_double` grupuri de 11 va fi produsul combinarilor de la punctele de mai sus
 - Repet pasul de mai sus pentru toate valorile posibile pentru `nr_double = 0...nr_groups/2` si adun valorile obtinute astfel
 
+> Complexitatea solutiei: `O(y^2)`
 
 ## Problema 5 - BadGPT
 
@@ -102,3 +156,5 @@ Optimizarile pe care le-am facut sunt urmatoarele:
     - `A^(2k + 1) = (A^2)^k * A`
 - Sirul lui Fibonacci are proprietatea ca resturile sale modulo orice numar sunt periodice. Lungimile perioadelor modulo 1, 2, 3 etc. formeaza un sir numit sirul lui Pisano. Astfel, folosind codul scris in fisierul `Pisano.java` ([sursa](https://www.geeksforgeeks.org/fibonacci-number-modulo-m-and-pisano-period/)) am determinat (printr-ul calcul separat, "hardcodat") perioada Pisano a sirului lui Fibonacci modulo `10^9+7` si am obtinut perioada `2*10^9+16`. Astfel, a trebuit sa calculez valorile sirului lui Fibonacci pentru al maxim `2*10^9+16`-lea element.
 - Am implementat si un mecanism de memoizare in solutia mea; pentru a calcula valorile lui `Fibo[i]` (al i-lea element din sirul lui Fibonacci) prin metoda exponentierei de matrici primesc si valorile `Fibo[i - 1]` si `Fibo[i + 1]` de care e posibil sa am nevoie mai tarziu. Retin aceste valori intr-un HashMap.
+
+> Complexitatea solutiei: `O(G * log n)`

@@ -54,9 +54,7 @@ public class Badgpt {
 	private void solve() throws IOException {
 		Fibonacci fibonacci = new Fibonacci();
 		long total = 1;
-		for (int i = 1; i <= 51; i++) {
-			System.out.println(fibonacci.get(i));
-		}
+		fibonacci.get(1);
 		String[] letters = input.split("[0-9]+");
 		String[] numbersStrings = input.split("[a-z]");
 		long[] numbers = new long[numbersStrings.length - 1];
@@ -65,13 +63,11 @@ public class Badgpt {
 		}
 		for (int i = 0; i < letters.length; i++) {
 			if (letters[i].equals("u") || letters[i].equals("n")) {
-				System.out.println(letters[i] + numbers[i]);
 				total = (total * (fibonacci.get((int)numbers[i])
 					+ fibonacci.get((int)numbers[i] - 1)) % MOD) % MOD;
 			}
 		}
 
-		System.out.println(total);
 		PrintStream printer = new PrintStream("badgpt.out");
 		printer.println(total);
 		printer.close();
